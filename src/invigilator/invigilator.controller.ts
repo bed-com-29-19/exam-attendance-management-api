@@ -1,34 +1,39 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+/* eslint-disable prettier/prettier */
+import { Controller, Get, Post, Put, Delete, Body, Param, ParseIntPipe } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { InvigilatorDTO } from './dto/create-invigilator.dto';
 import { InvigilatorService } from './invigilator.service';
-import { CreateInvigilatorDto } from './dto/create-invigilator.dto';
-import { UpdateInvigilatorDto } from './dto/update-invigilator.dto';
 
-@Controller('invigilator')
+@ApiTags('invigilators')
+@Controller('invigilators')
 export class InvigilatorController {
   constructor(private readonly invigilatorService: InvigilatorService) {}
 
-  @Post()
-  create(@Body() createInvigilatorDto: CreateInvigilatorDto) {
-    return this.invigilatorService.create(createInvigilatorDto);
+  @Get()
+  async getAllInvigilators() {
+    return this.invigilatorService.getAllInvigilators();
   }
 
-  @Get()
-  findAll() {
-    return this.invigilatorService.findAll();
+  @Post()
+  async createInvigilator(@Body() invigilatorDTO: InvigilatorDTO) {
+    return this.invigilatorService.createInvigilator(invigilatorDTO);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.invigilatorService.findOne(+id);
+  async getInvigilatorById(@Param('id', ParseIntPipe) id: number) {
+    return this.invigilatorService.getInvigilatorById(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateInvigilatorDto: UpdateInvigilatorDto) {
-    return this.invigilatorService.update(+id, updateInvigilatorDto);
+  @Put(':id')
+  async updateInvigilator(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() invigilatorDTO: InvigilatorDTO,
+  ) {
+    return this.invigilatorService.updateInvigilator(id, invigilatorDTO);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.invigilatorService.remove(+id);
+  async deleteInvigilator(@Param('id', ParseIntPipe) id: number) {
+    return this.invigilatorService.deleteInvigilator(id);
   }
 }

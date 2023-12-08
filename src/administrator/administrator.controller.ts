@@ -1,44 +1,48 @@
+/* eslint-disable prettier/prettier */
 import {
   Controller,
   Get,
   Post,
-  Body,
-  Patch,
-  Param,
+  Put,
   Delete,
+  Body,
+  Param,
+  Injectable,
 } from '@nestjs/common';
+import { AdministratorDto} from './dto/create-administrator.dto';
 import { AdministratorService } from './administrator.service';
-import { CreateAdministratorDto } from './dto/create-administrator.dto';
-
-@Controller('administrator')
+import { ApiTags } from '@nestjs/swagger';
+@Injectable()
+@ApiTags('administrators')
+@Controller('administrators')
 export class AdministratorController {
   constructor(private readonly administratorService: AdministratorService) {}
 
-  @Post()
-  create(@Body() createAdministratorDto: CreateAdministratorDto) {
-    return this.administratorService.create(createAdministratorDto);
+  @Get()
+  async getAllAdministrators() {
+    return this.administratorService.getAllAdministrators();
   }
 
-  @Get()
-  findAll() {
-    return this.administratorService.findAll();
+  @Post()
+  async createAdministrator(@Body() administratorDTO: AdministratorDto) {
+    return this.administratorService.createAdministrator(administratorDTO);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.administratorService.findOne(+id);
+  async getAdministratorById(@Param('id') id: number) {
+    return this.administratorService.getAdministratorById(id);
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateAdministratorDto: UpdateAdministratorDto,
+  @Put(':id')
+  async updateAdministrator(
+    @Param('id') id: number,
+    @Body() administratorDto: AdministratorDto,
   ) {
-    return this.administratorService.update(+id, updateAdministratorDto);
+    return this.administratorService.updateAdministrator(id, administratorDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.administratorService.remove(+id);
+  async deleteAdministrator(@Param('id') id: number) {
+    return this.administratorService.deleteAdministrator(id);
   }
 }

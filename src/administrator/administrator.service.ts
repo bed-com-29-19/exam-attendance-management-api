@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAdministratorDto } from './dto/create-administrator.dto';
-import { UpdateAdministratorDto } from './dto/update-administrator.dto';
+/* eslint-disable prettier/prettier */
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Administrator } from './entities/administrator.entity';
+import { AdministratorDto } from './dto/create-administrator.dto';// Import the repository
+import { AdministratorRepository } from './repository/adminstrator.repository';
 
 @Injectable()
 export class AdministratorService {
-  create(createAdministratorDto: CreateAdministratorDto) {
-    return 'This action adds a new administrator';
+  constructor(
+    @InjectRepository(AdministratorRepository)
+    private readonly administratorRepository: Repository<Administrator>,
+  ) {}
+
+  async getAllAdministrators(): Promise<Administrator[]> {
+    return this.administratorRepository.find();
   }
 
-  findAll() {
-    return `This action returns all administrator`;
+  async createAdministrator(administratorDto: AdministratorDto): Promise<Administrator> {
+    const newAdministrator = this.administratorRepository.create(administratorDto);
+    return this.administratorRepository.save(newAdministrator);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} administrator`;
+  async getAdministratorById(id: number): Promise<Administrator> {
+    const administrator = await this.administratorRepository.findOne({ where: { id } });
+    if (!administrator) {
+      throw new NotFoundException('Administrator not found');
+    }
+    return administrator;
   }
 
-  update(id: number, updateAdministratorDto: UpdateAdministratorDto) {
-    return `This action updates a #${id} administrator`;
+  async updateAdministrator(id: number, administratorDto: AdministratorDto): Promise<Administrator> {
+    const administrator = await this.getAdministratorById(id);
+    // Update only properties that were passed in the DTO
+    Object.assign(administrator, administratorDto);
+    return this.administratorRepository.save(administrator);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} administrator`;
+  async deleteAdministrator(id: number): Promise<void> {
+    const administrator = await this.getAdministratorById(id);
+    await this.administratorRepository.remove(administrator);
   }
 }

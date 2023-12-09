@@ -2,7 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { InvigilatorService } from './invigilator.service';
 import { CreateInvigilatorDto } from './dto/create-invigilator.dto';
 import { UpdateInvigilatorDto } from './dto/update-invigilator.dto';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('invigilator')
 @Controller('invigilator')
 export class InvigilatorController {
   constructor(private readonly invigilatorService: InvigilatorService) {}
@@ -23,7 +24,10 @@ export class InvigilatorController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateInvigilatorDto: UpdateInvigilatorDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateInvigilatorDto: UpdateInvigilatorDto,
+  ) {
     return this.invigilatorService.update(+id, updateInvigilatorDto);
   }
 

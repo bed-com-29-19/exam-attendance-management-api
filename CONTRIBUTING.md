@@ -19,4 +19,4 @@ Thank you for your interest in contributing to the Attendance Management System.
 If you encounter any issues or have suggestions for improvements, please open an issue on the GitHub repository.
 
 ...
-
+npm run start:dev

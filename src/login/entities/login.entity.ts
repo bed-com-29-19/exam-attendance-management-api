@@ -2,8 +2,12 @@ import { Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
 @Entity()
 export class Invigilator  {
   @PrimaryGeneratedColumn()
-  id: number;
 
+  id: number;
+  @Column()
+firstname: string;
+@Column()
+surname:string;
   @Column()
   username: string;
 

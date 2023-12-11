@@ -2,7 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { InvigilatorService } from './Login.service';
 import { Invigilator } from './entities/Login.entity';
 import { InvigilatorDTO } from './dto/Login.dto';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('Invigilator')
 @Controller('Invigilator')
 export class InvigilatorController {
   constructor(private readonly InvigilatorService: InvigilatorService) {}
@@ -37,3 +38,4 @@ export class InvigilatorController {
     return this.InvigilatorService.deleteInvigilator(+id);
   }
 }
+

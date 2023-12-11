@@ -1,7 +1,15 @@
 {
+<<<<<<< HEAD
     "watch": ["src"],
     "ext": "ts,json",
     "ignore": ["src/**/*.spec.ts"],    "exec": "ts-node -r tsconfig-paths/register src/main.ts", 
     "delay": "3000" 
   }
   
+=======
+  "watch": ["src"], 
+  "ext": "js,json,ts,tsx,jsx", 
+  "ignore": ["node_modules"], 
+  "exec": "node main.ts" 
+}
+>>>>>>> 55d5674182c3961db4dac1ba0781a0444fe4dfc1

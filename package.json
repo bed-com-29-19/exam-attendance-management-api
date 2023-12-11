@@ -1,14 +1,15 @@
 {
-  "name": "exam-attendance-management-api",
+  "name": "unima-exam-attendance-management-api",
   "version": "0.0.1",
   "description": "",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "dev": "nodemon --watch src --ext ts,json --exec ts-node main.ts",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
+    "start": "nodemon --watch dist --ext js,json --exec node dist/main.js",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -18,13 +19,20 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+<<<<<<< HEAD
     "start:dev:watch": "nodemon --exec \"npm run start:dev\""
+=======
+    "generate:swagger": "nest generate swagger"
+>>>>>>> 55d5674182c3961db4dac1ba0781a0444fe4dfc1
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
+    "@nestjs/jwt": "^10.2.0",
+    "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.1.16",
+<<<<<<< HEAD
     "@nestjs/typeorm": "^10.0.1",
     "dotenv": "^16.3.1",
     "mysql": "^2.18.1",
@@ -33,6 +41,17 @@
     "rxjs": "^7.8.1",
     "swagger-ui-express": "^5.0.0",
     "typeorm": "^0.3.17"
+=======
+    "bcryptjs": "^2.4.3",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.1",
+    "swagger-ui-express": "^5.0.0",
+    "swagger-ui-themes": "^3.0.1"
+>>>>>>> 55d5674182c3961db4dac1ba0781a0444fe4dfc1
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
@@ -41,6 +60,8 @@
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.1",
+    "@types/passport-jwt": "^3.0.13",
+    "@types/passport-local": "^1.0.38",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",

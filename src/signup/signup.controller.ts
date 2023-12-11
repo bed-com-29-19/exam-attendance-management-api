@@ -12,23 +12,23 @@ export class SignupController {
     return this.signupService.create(createSignupDto);
   }
 
-  @Get()
-  findAll() {
-    return this.signupService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.signupService.findAll();
+  // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.signupService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.signupService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSignupDto: UpdateSignupDto) {
-    return this.signupService.update(+id, updateSignupDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateSignupDto: UpdateSignupDto) {
+  //   return this.signupService.update(+id, updateSignupDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.signupService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.signupService.remove(+id);
+  // }
 }

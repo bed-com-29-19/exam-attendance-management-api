@@ -1,34 +1,39 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { LoginService } from './login.service';
-import { CreateLoginDto } from './dto/create-login.dto';
-import { UpdateLoginDto } from './dto/update-login.dto';
+import { InvigilatorService } from './Login.service';
+import { Invigilator } from './entities/Login.entity';
+import { InvigilatorDTO } from './dto/Login.dto';
 
-@Controller('login')
-export class LoginController {
-  constructor(private readonly loginService: LoginService) {}
+@Controller('Invigilator')
+export class InvigilatorController {
+  constructor(private readonly InvigilatorService: InvigilatorService) {}
 
   @Post()
-  create(@Body() createLoginDto: CreateLoginDto) {
-    return this.loginService.create(createLoginDto);
+  async createInvigilator(@Body() InvigilatorData: InvigilatorDTO): Promise<Invigilator> {
+    const { username, email, password } = InvigilatorData;
+    return this.InvigilatorService.createInvigilator(username, email, password);
   }
 
   @Get()
-  findAll() {
-    return this.loginService.findAll();
+  async findAllInvigilators(): Promise<Invigilator[]> {
+    return this.InvigilatorService.findAllInvigilators();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.loginService.findOne(+id);
+  async findInvigilatorById(@Param('id') id: string): Promise<Invigilator | undefined> {
+    return this.InvigilatorService.findInvigilatorById(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLoginDto: UpdateLoginDto) {
-    return this.loginService.update(+id, updateLoginDto);
+  async updateInvigilator(
+    @Param('id') id: string,
+    @Body() InvigilatorData: InvigilatorDTO,
+  ): Promise<Invigilator | undefined> {
+    const { username, email, password } = InvigilatorData;
+    return this.InvigilatorService.updateInvigilator(+id, username, email, password);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.loginService.remove(+id);
+  async deleteInvigilator(@Param('id') id: string): Promise<boolean> {
+    return this.InvigilatorService.deleteInvigilator(+id);
   }
 }

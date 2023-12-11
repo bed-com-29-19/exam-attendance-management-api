@@ -1,26 +1,42 @@
 import { Injectable } from '@nestjs/common';
-import { CreateLoginDto } from './dto/create-login.dto';
-import { UpdateLoginDto } from './dto/update-login.dto';
+import { Invigilator } from './entities/login.entity'; // Import the Invigilator class
 
 @Injectable()
-export class LoginService {
-  create(createLoginDto: CreateLoginDto) {
-    return 'This action adds a new login';
+export class InvigilatorService {
+  private invigilators: Invigilator[] = []; // Initialize an empty array to hold Invigilator instances
+
+  async createInvigilator(username: string, email: string, password: string): Promise<Invigilator> {
+    const newInvigilator = new Invigilator();
+    newInvigilator.username = username;
+    newInvigilator.email = email;
+    newInvigilator.password = password;
+
+    this.invigilators.push(newInvigilator);
+    return newInvigilator;
   }
 
-  findAll() {
-    return `This action returns all login`;
+  async findAllInvigilators(): Promise<Invigilator[]> {
+    return this.invigilators;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} login`;
+  async findInvigilatorById(id: number): Promise<Invigilator | undefined> {
+    return this.invigilators.find(invigilator => invigilator.id === id);
   }
 
-  update(id: number, updateLoginDto: UpdateLoginDto) {
-    return `This action updates a #${id} login`;
+  async updateInvigilator(id: number, username: string, email: string, password: string): Promise<Invigilator | undefined> {
+    const invigilatorToUpdate = this.invigilators.find(invigilator => invigilator.id === id);
+    if (invigilatorToUpdate) {
+      invigilatorToUpdate.username = username;
+      invigilatorToUpdate.email = email;
+      invigilatorToUpdate.password = password;
+      return invigilatorToUpdate;
+    }
+    return undefined;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} login`;
+  async deleteInvigilator(id: number): Promise<boolean> {
+    const initialLength = this.invigilators.length;
+    this.invigilators = this.invigilators.filter(invigilator => invigilator.id !== id);
+    return this.invigilators.length !== initialLength;
   }
 }

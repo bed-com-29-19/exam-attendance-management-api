@@ -3,5 +3,6 @@ import { administratorService } from './administrator.service';
 
 @Module({
   providers: [administratorService]
+  //Controllers: [AdministratorController]
 })
 export class AdministratorModule {}

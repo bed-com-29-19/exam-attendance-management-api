@@ -1,6 +1,14 @@
 import { ApiTags } from '@nestjs/swagger';
-import { Controller } from '@nestjs/common';
-
-@ApiTags('Invigilator')
+import { Controller, Post, Body } from '@nestjs/common';
+import {  CreateAdministratorDto } from './create-administrator.dto';
+@ApiTags('administrator')
 @Controller('administrator')
-export class InvigilatorController {}
+export class AdmininistratorController {
+  administratorService: any;
+  constructor() {}
+
+  @Post('create-administrator')
+  async createAdministrator(@Body() createAdministratorDto: CreateAdministratorDto): Promise<Administrator> {
+    return this.administratorService.createAdministrator(createAdministratorDto);
+  }
+}

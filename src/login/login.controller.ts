@@ -1,14 +1,15 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { InvigilatorService } from './Login.service';
 import { Invigilator } from './entities/Login.entity';
-import { InvigilatorDTO } from './dto/Login.dto';
+import {InvigilatorDTO } from './dto/Login.dto';
 import { ApiTags } from '@nestjs/swagger';
+
 @ApiTags('Invigilator')
 @Controller('Invigilator')
 export class InvigilatorController {
   constructor(private readonly InvigilatorService: InvigilatorService) {}
 
-  @Post()
+  @Post('Login')
   async createInvigilator(@Body() InvigilatorData: InvigilatorDTO): Promise<Invigilator> {
     const { username, email, password } = InvigilatorData;
     return this.InvigilatorService.createInvigilator(username, email, password);
@@ -38,4 +39,19 @@ export class InvigilatorController {
     return this.InvigilatorService.deleteInvigilator(+id);
   }
 }
+
+//adding admin end points 
+// @ApiTags('Administrator')
+// @Controller('Administrator')
+// export class AdministratorController{
+//  constructor (private readonly AdministratorService: AdministratorService){}
+
+//  @Post('Login')
+//   async createAdministrator(@Body() AdministratorData: AdministratorDTO): Promise<Administrator> {
+//     const { username, email, password } = AdministratorData;
+//     return this.AdministratorService.createAdministrator(username, email, password);
+//   }
+
+
+// }
 

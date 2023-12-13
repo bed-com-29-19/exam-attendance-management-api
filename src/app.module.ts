@@ -12,7 +12,7 @@ import { AdministratorModule } from './Administrator/administrator.module';
 
 
 @Module({
-  imports: [ PassportModule, AdministratorModule,    LoginModule, JwtModule.register({
+  imports: [ PassportModule, AdministratorModule, LoginModule, JwtModule.register({
       secret: 'your-secret', // Replace with your secret key
       signOptions: { expiresIn: '1h' }, // Token expiration time
      }),

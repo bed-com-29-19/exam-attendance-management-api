@@ -1,5 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { Invigilator } from './entities/login.entity'; // Import the Invigilator class
+// import { Administrator } from './entities/login.entity';
+
+
+// @Injectable()
+// export class AdministratorService{
+
+//   private administrators: Administrator[] = [];
+//    //this service is for the login of Administrators 
+//    async createAdministrator(username: string, email: string, password: string): Promise<Administrator > {
+//     const newAdministrator = new Administrator();
+//     newAdministrator.username = username;
+//     //newAdministrator.email = email;
+//     newAdministrator.password = password;
+
+//     this.administrators.push(newAdministrator);
+//     return newAdministrator;
+//   }
+
+// }
+
 
 @Injectable()
 export class InvigilatorService {

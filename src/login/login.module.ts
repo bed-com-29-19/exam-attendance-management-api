@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { InvigilatorController } from './login.controller';
-import { InvigilatorService } from './Login.service';
+import { InvigilatorController} from './login.controller';
+import { InvigilatorService} from './Login.service';
 
 @Module({
   controllers: [InvigilatorController],

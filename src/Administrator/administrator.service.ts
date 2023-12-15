@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Administrator } from './entities/admin.entity';
-
 @Injectable()
 export class administratorService {
 
@@ -10,13 +9,11 @@ export class administratorService {
     const newAdministrator = new Administrator();
     newAdministrator.username = username;
     newAdministrator.password = password;
-
     this.administrators.push(newAdministrator);
     return newAdministrator;
   }
-
-//   async findByUsername(username: string): Promise<Administrator | null>{
-//     return this.administratorModel.findOne({username}).exec();
-//   }
+  async findAllAdministrator(): Promise<Administrator[]> {
+    return this.administrators;
+  }
 
 }

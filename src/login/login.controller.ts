@@ -8,16 +8,17 @@ import { GoogleSheetsService } from 'src/google-sheets.services';
 @ApiTags('invigilator')
 @Controller('invigilator')
 export class InvigilatorController {
+  constructor(private readonly InvigilatorService: InvigilatorService) {}
 
-  constructor(
-    private readonly sheetsService: GoogleSheetsService,
-    private readonly invigilatorService:InvigilatorService,
-    ) {}
+  @Post('Login')
+  async createInvigilator(@Body() InvigilatorData: InvigilatorDTO): Promise<Invigilator> {
+    const { username, email, password } = InvigilatorData;
+    return this.InvigilatorService.createInvigilator(username, email, password);
+  }
 
   @Get()
-  getInvigilatorData(): string {
-    // Implement logic to retrieve data from Google Sheets
-    return 'Invigilator Data';
+  async findAllInvigilators(): Promise<Invigilator[]> {
+    return this.InvigilatorService.findAllInvigilators();
   }
 
   @Post()

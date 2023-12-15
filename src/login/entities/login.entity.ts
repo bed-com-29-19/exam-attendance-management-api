@@ -1,13 +1,14 @@
 import { Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
+
+//invigilator
 @Entity()
 export class Invigilator  {
   @PrimaryGeneratedColumn()
 
   id: number;
   @Column()
-firstname: string;
-@Column()
-surname:string;
+  firstname: string;
+
   @Column()
   username: string;
 
@@ -17,3 +18,4 @@ surname:string;
   @Column()
   password: string;
 }
+

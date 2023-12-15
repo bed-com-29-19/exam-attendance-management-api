@@ -1,38 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { Invigilator } from './entities/login.entity'; // Import the Invigilator class
-// import { Administrator } from './entities/login.entity';
-
-
-// @Injectable()
-// export class AdministratorService{
-
-//   private administrators: Administrator[] = [];
-//    //this service is for the login of Administrators 
-//    async createAdministrator(username: string, email: string, password: string): Promise<Administrator > {
-//     const newAdministrator = new Administrator();
-//     newAdministrator.username = username;
-//     //newAdministrator.email = email;
-//     newAdministrator.password = password;
-
-//     this.administrators.push(newAdministrator);
-//     return newAdministrator;
-//   }
-
-// }
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { InvigilatorDTO } from './dto/Login.dto';
 
 
 @Injectable()
 export class InvigilatorService {
-  private invigilators: Invigilator[] = []; // Initialize an empty array to hold Invigilator instances
+  constructor(
+  private invigilators: Invigilator[] = [],// Initialize an empty array to hold Invigilator instances
 
-  async createInvigilator(username: string, email: string, password: string): Promise<Invigilator> {
-    const newInvigilator = new Invigilator();
-    newInvigilator.username = username;
-    newInvigilator.email = email;
-    newInvigilator.password = password;
+  @InjectRepository(Invigilator)
+  private readonly invigilatorRepository: Repository<Invigilator>,
+  ){}
 
-    this.invigilators.push(newInvigilator);
-    return newInvigilator;
+ async createInvigilator(invigilatorData: InvigilatorDTO): Promise<Invigilator> {
+    const newInvigilator = this.invigilatorRepository.create(invigilatorData);
+    return this.invigilatorRepository.save(newInvigilator);
   }
 
   async findAllInvigilators(): Promise<Invigilator[]> {

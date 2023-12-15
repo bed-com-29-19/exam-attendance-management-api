@@ -3,55 +3,64 @@ import { InvigilatorService } from './Login.service';
 import { Invigilator } from './entities/Login.entity';
 import {InvigilatorDTO } from './dto/Login.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { GoogleSheetsService } from 'src/google-sheets.services';
 
-@ApiTags('Invigilator')
-@Controller('Invigilator')
+@ApiTags('invigilator')
+@Controller('invigilator')
 export class InvigilatorController {
-  constructor(private readonly InvigilatorService: InvigilatorService) {}
 
-  @Post('Login')
-  async createInvigilator(@Body() InvigilatorData: InvigilatorDTO): Promise<Invigilator> {
-    const { username, email, password } = InvigilatorData;
-    return this.InvigilatorService.createInvigilator(username, email, password);
-  }
+  constructor(
+    private readonly sheetsService: GoogleSheetsService,
+    private readonly invigilatorService:InvigilatorService,
+    ) {}
 
   @Get()
-  async findAllInvigilators(): Promise<Invigilator[]> {
-    return this.InvigilatorService.findAllInvigilators();
+  getInvigilatorData(): string {
+    // Implement logic to retrieve data from Google Sheets
+    return 'Invigilator Data';
   }
 
-  @Get(':id')
-  async findInvigilatorById(@Param('id') id: string): Promise<Invigilator | undefined> {
-    return this.InvigilatorService.findInvigilatorById(+id);
+  @Post()
+  async createInvigilatorData(@Body() invigilatorData: InvigilatorDTO): Promise<Invigilator> {
+    const createdInvigilator = await this.invigilatorService.createInvigilator(invigilatorData);
+
+    // Append the data to Google Sheets
+    await this.sheetsService.appendRow(Object.values(createdInvigilator));
+
+    return createdInvigilator;
   }
 
-  @Patch(':id')
-  async updateInvigilator(
-    @Param('id') id: string,
-    @Body() InvigilatorData: InvigilatorDTO,
-  ): Promise<Invigilator | undefined> {
-    const { username, email, password } = InvigilatorData;
-    return this.InvigilatorService.updateInvigilator(+id, username, email, password);
-  }
+  // constructor(private readonly InvigilatorService: InvigilatorService) {}
 
-  @Delete(':id')
-  async deleteInvigilator(@Param('id') id: string): Promise<boolean> {
-    return this.InvigilatorService.deleteInvigilator(+id);
-  }
+  // @Post('Login')
+  // async createInvigilator(@Body() InvigilatorData: InvigilatorDTO): Promise<Invigilator> {
+  //   const { username, email, password } = InvigilatorData;
+  //   return this.InvigilatorService.createInvigilator(username, email, password);
+  // }
+
+  // @Get()
+  // async findAllInvigilators(): Promise<Invigilator[]> {
+  //   return this.InvigilatorService.findAllInvigilators();
+  // }
+
+  // @Get(':id')
+  // async findInvigilatorById(@Param('id') id: string): Promise<Invigilator | undefined> {
+  //   return this.InvigilatorService.findInvigilatorById(+id);
+  // }
+
+  // @Patch(':id')
+  // async updateInvigilator(
+  //   @Param('id') id: string,
+  //   @Body() InvigilatorData: InvigilatorDTO,
+  // ): Promise<Invigilator | undefined> {
+  //   const { username, email, password } = InvigilatorData;
+  //   return this.InvigilatorService.updateInvigilator(+id, username, email, password);
+  // }
+
+  // @Delete(':id')
+  // async deleteInvigilator(@Param('id') id: string): Promise<boolean> {
+  //   return this.InvigilatorService.deleteInvigilator(+id);
+  // }
 }
 
-//adding admin end points 
-// @ApiTags('Administrator')
-// @Controller('Administrator')
-// export class AdministratorController{
-//  constructor (private readonly AdministratorService: AdministratorService){}
-
-//  @Post('Login')
-//   async createAdministrator(@Body() AdministratorData: AdministratorDTO): Promise<Administrator> {
-//     const { username, email, password } = AdministratorData;
-//     return this.AdministratorService.createAdministrator(username, email, password);
-//   }
-
-
-// }
 

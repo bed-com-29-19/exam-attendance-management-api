@@ -8,6 +8,7 @@ import { GoogleSheetsService } from 'src/google-sheets.services';
 @ApiTags('invigilator')
 @Controller('invigilator')
 export class InvigilatorController {
+  sheetsService: any;
   constructor(private readonly InvigilatorService: InvigilatorService) {}
 
   @Post('Login')

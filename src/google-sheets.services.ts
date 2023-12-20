@@ -7,12 +7,14 @@ export class GoogleSheetsService {
   private doc: GoogleSpreadsheet;
 
   async authenticate() {
+    console.log('attempting to authenticate...');
     //this.doc = new GoogleSpreadsheet('1jtqCDIeBWXAGqODdYJaPM8qk1sWYjdK-t_i_u8FHsLE');
     const spreadsheetId = '1jtqCDIeBWXAGqODdYJaPM8qk1sWYjdK-t_i_u8FHsLE';
     const creds = require('./google-sheets-credentials.json');
     const doc = new GoogleSpreadsheet(spreadsheetId, creds);
     //await this.doc.useServiceAccountFile(creds);
     await this.doc.loadInfo();
+    console.log('Authentication successful');
   }
 
   async appendRow(data: any[]): Promise<void> {
@@ -47,4 +49,7 @@ export class GoogleSheetsService {
 
     return sheetData;
   }
+  
+  
+
 }

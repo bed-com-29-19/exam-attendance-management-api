@@ -2,7 +2,6 @@ import { ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { Administrator } from './entities/admin.entity';
 import { AdministratorDTO } from './dto/administrator.dto';
-import { administratorService } from './administrator.service';
 import { GoogleSheetsService } from 'src/google-sheets.services';
 
 

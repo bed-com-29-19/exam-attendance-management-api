@@ -5,18 +5,12 @@ import { LoginService } from './login.service';
 import { Invigilator } from './entities/login.entity';
 import { ApiTags } from '@nestjs/swagger';
 
-<<<<<<< HEAD
 @ApiTags('invigilator')
 @Controller('invigilator')
 export class InvigilatorController {
   sheetsService: any;
+  loginService: any;
   constructor(private readonly InvigilatorService: InvigilatorService) {}
-=======
-@ApiTags('Invigilator')
-@Controller('login')
-export class LoginController {
-  constructor(private readonly loginService: LoginService) {}
->>>>>>> d50ad89780cdff29617dbc4b0ddc3ac1ba1d99bc
 
   @Post('/createInvigilator')
   async createInvigilator(@Body() invigilatorData: Partial<Invigilator>): Promise<Invigilator> {

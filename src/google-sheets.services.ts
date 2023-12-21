@@ -14,7 +14,7 @@ export class GoogleSheetsService {
     const doc = new GoogleSpreadsheet(spreadsheetId, creds);
     //await this.doc.useServiceAccountFile(creds);
     await this.doc.loadInfo();
-    console.log('Authentication successful');
+    
   }
 
   async appendRow(data: any[]): Promise<void> {

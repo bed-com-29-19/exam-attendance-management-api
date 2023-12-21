@@ -1,6 +1,8 @@
 // src/google-sheets.service.ts
 import { Injectable } from '@nestjs/common';
 import { GoogleSpreadsheet, GoogleSpreadsheetRow } from 'google-spreadsheet';
+import path from 'path';
+
 
 @Injectable()
 export class GoogleSheetsService {
@@ -10,7 +12,7 @@ export class GoogleSheetsService {
     console.log('attempting to authenticate...');
     //this.doc = new GoogleSpreadsheet('1jtqCDIeBWXAGqODdYJaPM8qk1sWYjdK-t_i_u8FHsLE');
     const spreadsheetId = '1jtqCDIeBWXAGqODdYJaPM8qk1sWYjdK-t_i_u8FHsLE';
-    const creds = require('./google-sheets-credentials.json');
+    const creds = require(credentialsPath);
     const doc = new GoogleSpreadsheet(spreadsheetId, creds);
     //await this.doc.useServiceAccountFile(creds);
     await this.doc.loadInfo();

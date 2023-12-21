@@ -18,15 +18,15 @@ import { Administrator } from './Administrator/entities/admin.entity';
   imports: [
    TypeOrmModule.forFeature([Administrator, Invigilator]), 
     TypeOrmModule.forRoot({
-     type: 'mysql',
-     host:'sql11.freesqldatabse.com',
-       port: 3306,
-       username:'sql11671945',
-       password:'',
-       database:'unimaExamattendance',
+    //  type: 'mysql',
+    //  host:'sql11.freesqldatabse.com',
+    //    port: 3306,
+    //    username:'sql11671945',
+    //    password:'',
+    //    database:'unimaExamattendance',
 
-      // type: 'postgres',
-      // url: 'postgres://ublvrsdg:EYMciSfc0qP1KphYSlVVQF1CRKQ1-Ct4@flora.db.elephantsql.com/ublvrsdg',
+      type: 'postgres',
+      url: 'postgres://ublvrsdg:EYMciSfc0qP1KphYSlVVQF1CRKQ1-Ct4@flora.db.elephantsql.com/ublvrsdg',
 
        entities:[ Invigilator, Administrator],
         synchronize: false,

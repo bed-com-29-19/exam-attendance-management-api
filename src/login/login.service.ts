@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { Invigilator } from './entities/login.entity'; // Import the Invigilator class
 // import { Administrator } from './entities/login.entity';

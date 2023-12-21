@@ -1,4 +1,6 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { InvigilatorService } from './Login.service';
 import { Invigilator } from './entities/Login.entity';
 import {InvigilatorDTO } from './dto/Login.dto';

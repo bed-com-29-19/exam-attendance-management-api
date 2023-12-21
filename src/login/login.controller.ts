@@ -1,59 +1,54 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { InvigilatorService } from './Login.service';
-import { Invigilator } from './entities/Login.entity';
-import {InvigilatorDTO } from './dto/Login.dto';
+
+// login.controller.ts
+
+import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
+import { LoginService } from './login.service';
+import { Invigilator } from './entities/login.entity';
 import { ApiTags } from '@nestjs/swagger';
+import { InvigilatorDTO } from './dto/login.dto';
 
-@ApiTags('Invigilator')
-@Controller('Invigilator')
+@ApiTags('invigilator')
+@Controller('invigilator')
 export class InvigilatorController {
-  constructor(private readonly InvigilatorService: InvigilatorService) {}
+  sheetsService: any;
+  loginService: any;
+  constructor(private readonly InvigilatorService: LoginService) {}
 
-  @Post('Login')
-  async createInvigilator(@Body() InvigilatorData: InvigilatorDTO): Promise<Invigilator> {
-    const { username, email, password } = InvigilatorData;
-    return this.InvigilatorService.createInvigilator(username, email, password);
+  // @Post('/createInvigilator')
+  // async createInvigilator(@Body() invigilatorData: Partial<Invigilator>): Promise<Invigilator> {
+  //   return this.loginService.createInvigilator(invigilatorData);
+  // }
+
+ 
+
+  @Post('/createInvigilator')
+  async createInvigilator(@Body() InvigilatorData: InvigilatorDTO): Promise<Invigilator>{
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { username, email, password, } = InvigilatorData;
+    return this.loginService.createInvigilator(InvigilatorData);
   }
 
-  @Get()
-  async findAllInvigilators(): Promise<Invigilator[]> {
-    return this.InvigilatorService.findAllInvigilators();
+  @Get('/getInvigilators')
+  getinvigilator(){
+      return this.loginService.getInvigilator();
   }
 
-  @Get(':id')
-  async findInvigilatorById(@Param('id') id: string): Promise<Invigilator | undefined> {
-    return this.InvigilatorService.findInvigilatorById(+id);
+  @Get('/getInvigilator/:id')
+  async getInvigilator(@Param('id') id: number): Promise<Invigilator> {
+    return this.loginService.getOneInvigilator(id);
   }
 
-  @Patch(':id')
+  @Delete('/removeInvigilator/:id')
+  async removeInvigilator(@Param('id', ParseIntPipe) id: number){
+    return this.loginService.removeInvigilator(id);
+  }
+
+  @Put('/updateInvigilator/:id')
   async updateInvigilator(
-    @Param('id') id: string,
-    @Body() InvigilatorData: InvigilatorDTO,
-  ): Promise<Invigilator | undefined> {
-    const { username, email, password } = InvigilatorData;
-    return this.InvigilatorService.updateInvigilator(+id, username, email, password);
-  }
-
-  @Delete(':id')
-  async deleteInvigilator(@Param('id') id: string): Promise<boolean> {
-    return this.InvigilatorService.deleteInvigilator(+id);
+    @Param('id') id: number,
+    @Body() invigilatorData: Partial<Invigilator>,
+  ): Promise<Invigilator> {
+    return this.loginService.updateInvigilator(id, invigilatorData);
   }
 }
-
-//adding admin end points 
-// @ApiTags('Administrator')
-// @Controller('Administrator')
-// export class AdministratorController{
-//  constructor (private readonly AdministratorService: AdministratorService){}
-
-//  @Post('Login')
-//   async createAdministrator(@Body() AdministratorData: AdministratorDTO): Promise<Administrator> {
-//     const { username, email, password } = AdministratorData;
-//     return this.AdministratorService.createAdministrator(username, email, password);
-//   }
-
-
-// }
-

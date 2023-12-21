@@ -1,22 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { Administrator } from './entities/admin.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Administrator } from './entities/admin.entity'; // Adjust this import based on your entity location
 
 @Injectable()
-export class administratorService {
+export class AdministratorService {
+  constructor(
+    @InjectRepository(Administrator)
+    private readonly administratorRepository: Repository<Administrator>,
+  ) {}
 
-  private administrators: Administrator[] = [];
-   //this service is for the login of Administrators 
-   async createAdministrator(username: string, password: string): Promise<Administrator> {
-    const newAdministrator = new Administrator();
-    newAdministrator.username = username;
-    newAdministrator.password = password;
-
-    this.administrators.push(newAdministrator);
-    return newAdministrator;
+  async createAdministrator(username: string, password: string): Promise<Administrator> {
+    const newAdministrator = this.administratorRepository.create({
+      username,
+      password,
+    });
+    return await this.administratorRepository.save(newAdministrator);
   }
 
-//   async findByUsername(username: string): Promise<Administrator | null>{
-//     return this.administratorModel.findOne({username}).exec();
-//   }
-
+  async findAllAdministrator(): Promise<Administrator[]> {
+    return this.administratorRepository.find();
+  }
 }

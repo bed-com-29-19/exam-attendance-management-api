@@ -1,63 +1,44 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
-import { Invigilator } from './entities/login.entity'; // Import the Invigilator class
-// import { Administrator } from './entities/login.entity';
+
+// login.service.ts
 
 
-// @Injectable()
-// export class AdministratorService{
-
-//   private administrators: Administrator[] = [];
-//    //this service is for the login of Administrators 
-//    async createAdministrator(username: string, email: string, password: string): Promise<Administrator > {
-//     const newAdministrator = new Administrator();
-//     newAdministrator.username = username;
-//     //newAdministrator.email = email;
-//     newAdministrator.password = password;
-
-//     this.administrators.push(newAdministrator);
-//     return newAdministrator;
-//   }
-
-// }
-
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Invigilator } from './entities/login.entity';
 
 @Injectable()
-export class InvigilatorService {
-  private invigilators: Invigilator[] = []; // Initialize an empty array to hold Invigilator instances
+export class LoginService {
+  constructor(
+    @InjectRepository(Invigilator)
+    private readonly invigilatorRepository: Repository<Invigilator>,
+  ) {}
 
-  async createInvigilator(username: string, email: string, password: string): Promise<Invigilator> {
-    const newInvigilator = new Invigilator();
-    newInvigilator.username = username;
-    newInvigilator.email = email;
-    newInvigilator.password = password;
-
-    this.invigilators.push(newInvigilator);
-    return newInvigilator;
+  async createInvigilator(invigilatorData: Partial<Invigilator>): Promise<Invigilator> {
+    const newInvigilator = this.invigilatorRepository.create(invigilatorData);
+    return await this.invigilatorRepository.save(newInvigilator);
   }
 
-  async findAllInvigilators(): Promise<Invigilator[]> {
-    return this.invigilators;
+  async getInvigilator(): Promise<Invigilator[]>{
+    return await this.invigilatorRepository.find();
   }
 
-  async findInvigilatorById(id: number): Promise<Invigilator | undefined> {
-    return this.invigilators.find(invigilator => invigilator.id === id);
-  }
-
-  async updateInvigilator(id: number, username: string, email: string, password: string): Promise<Invigilator | undefined> {
-    const invigilatorToUpdate = this.invigilators.find(invigilator => invigilator.id === id);
-    if (invigilatorToUpdate) {
-      invigilatorToUpdate.username = username;
-      invigilatorToUpdate.email = email;
-      invigilatorToUpdate.password = password;
-      return invigilatorToUpdate;
+  async getOneInvigilator(id: number): Promise<Invigilator> {
+    const invigilator = await this.invigilatorRepository.findOneById('id');
+    if (!invigilator) {
+      throw new NotFoundException(`Invigilator with ID ${id} not found`);
     }
-    return undefined;
+    return invigilator;
   }
 
-  async deleteInvigilator(id: number): Promise<boolean> {
-    const initialLength = this.invigilators.length;
-    this.invigilators = this.invigilators.filter(invigilator => invigilator.id !== id);
-    return this.invigilators.length !== initialLength;
+  async removeInvigilator(id: number){
+    return this.invigilatorRepository.delete(id);
+  }
+
+  async updateInvigilator(id: number, invigilatorData: Partial<Invigilator>): Promise<Invigilator> {
+    await this.getOneInvigilator(id); // Check if invigilator exists
+    await this.invigilatorRepository.update(id, invigilatorData);
+    return await this.invigilatorRepository.findOneById(id);
   }
 }

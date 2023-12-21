@@ -1,22 +1,26 @@
 import { ApiTags } from '@nestjs/swagger';
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { Administrator } from './entities/admin.entity';
 import { AdministratorDTO } from './dto/administrator.dto';
-import { administratorService } from './administrator.service';
+import { GoogleSheetsService } from 'src/google-sheets.services';
 
 
 @ApiTags('Administrator')
-@Controller('administrator')
+@Controller('Administrator')
 export class AdministratorController {
+  AdministratorService: any;
 
- constructor (private readonly AdministratorService: administratorService){}
+constructor(private readonly sheetsService: GoogleSheetsService){}
 
- @Post('Login')
-  async createAdministrator(@Body() AdministratorData: AdministratorDTO): Promise<Administrator> {
-    const { username, password } = AdministratorData;
+  // @Post()
+  // createAdministrator(@Body() data: any): string {
+  //   this.sheetsService.appendRow(Object.values(data));
+  //   return 'Administrator Data Created';
+  // }
+
+  @Post('Login')
+  async createAdministrator(@Body() administratorData: AdministratorDTO): Promise<Administrator> {
+    const { username, password } = administratorData;
     return this.AdministratorService.createAdministrator(username, password);
   }
-
-
 }
-

@@ -6,10 +6,12 @@ import { Invigilator } from './entities/login.entity';
 import { ApiTags } from '@nestjs/swagger';
 import { InvigilatorDTO } from './dto/login.dto';
 
-@ApiTags('Invigilator')
-@Controller('login')
-export class LoginController {
-  constructor(private readonly loginService: LoginService) {}
+@ApiTags('invigilator')
+@Controller('invigilator')
+export class InvigilatorController {
+  sheetsService: any;
+  loginService: any;
+  constructor(private readonly InvigilatorService: LoginService) {}
 
   // @Post('/createInvigilator')
   // async createInvigilator(@Body() invigilatorData: Partial<Invigilator>): Promise<Invigilator> {

@@ -9,14 +9,16 @@ export class GoogleSheetsService {
   private doc: GoogleSpreadsheet;
 
   async authenticate() {
-
-    const credentialsPath = path.resolve(__dirname, './src/google-sheets-credentials.json', 'google-sheets-credentials.json');
+    console.log('attempting to authenticate...');
+    //this.doc = new GoogleSpreadsheet('1jtqCDIeBWXAGqODdYJaPM8qk1sWYjdK-t_i_u8FHsLE');
     const spreadsheetId = '1jtqCDIeBWXAGqODdYJaPM8qk1sWYjdK-t_i_u8FHsLE';
     
+    const credentialsPath = path.resolve(__dirname, 'path-to-credentials-folder', 'google-sheets-credentials.json');
     const creds = require(credentialsPath);
     const doc = new GoogleSpreadsheet(spreadsheetId, creds);
     //await this.doc.useServiceAccountFile(creds);
     await this.doc.loadInfo();
+    
   }
 
   async appendRow(data: any[]): Promise<void> {
@@ -51,4 +53,7 @@ export class GoogleSheetsService {
 
     return sheetData;
   }
+  
+  
+
 }

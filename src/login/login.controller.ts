@@ -4,15 +4,24 @@ import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe } from '@
 import { LoginService } from './login.service';
 import { Invigilator } from './entities/login.entity';
 import { ApiTags } from '@nestjs/swagger';
+import { InvigilatorDTO } from './dto/login.dto';
 
 @ApiTags('Invigilator')
 @Controller('login')
 export class LoginController {
   constructor(private readonly loginService: LoginService) {}
 
+  // @Post('/createInvigilator')
+  // async createInvigilator(@Body() invigilatorData: Partial<Invigilator>): Promise<Invigilator> {
+  //   return this.loginService.createInvigilator(invigilatorData);
+  // }
+
+ 
+
   @Post('/createInvigilator')
-  async createInvigilator(@Body() invigilatorData: Partial<Invigilator>): Promise<Invigilator> {
-    return this.loginService.createInvigilator(invigilatorData);
+  async createInvigilator(@Body() InvigilatorData: InvigilatorDTO): Promise<Invigilator>{
+    const { username, email, password, } = InvigilatorData;
+    return this.loginService.createInvigilator(InvigilatorData);
   }
 
   @Get('/getInvigilator/:id')

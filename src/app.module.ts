@@ -16,16 +16,17 @@ import { Invigilator} from "./login/entities/login.entity"
 import { Administrator } from './Administrator/entities/admin.entity';
 @Module({
   imports: [
-   TypeOrmModule.forFeature([Administrator, Invigilator]), 
     TypeOrmModule.forRoot({
-     type: 'mysql',
-       port: 3306,
-       username:'root',
-       password:'',
-       database:'unimaExamAttendance',
-       entities:[ Invigilator, Administrator],
-        synchronize: false,
-    }), 
+      type: 'mysql',
+      host: 'sql11.freesqldatabase.com',
+      port: 3306,
+      username: 'sql11671945',
+      password: 'XcfnitKhDF',
+      database: 'sql11671945',
+      entities: [Invigilator, Administrator],
+      synchronize: false, // Set to true during development, false in production
+    }),
+    
     
     PassportModule, AdministratorModule, LoginModule, JwtModule.register({
       secret: 'your-secret', // Replace with your secret key

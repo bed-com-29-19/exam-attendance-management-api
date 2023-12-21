@@ -19,15 +19,15 @@ export class AdministratorController {
     return data;
   }
 
-  // @Post()
-  // createAdministrator(@Body() data: any): string {
-  //   this.sheetsService.appendRow(Object.values(data));
-  //   return 'Administrator Data Created';
-  // }
-
-  @Post('Login')
-  async createAdministrator(@Body() administratorData: AdministratorDTO): Promise<Administrator> {
-    const { username, password } = administratorData;
-    return this.administratorService.createAdministrator(username, password);
+  @Post()
+  createAdministrator(@Body() data: any): string {
+    this.sheetsService.appendRow(Object.values(data));
+    return 'Administrator Data Created';
   }
+
+  // @Post('Login')
+  // async createAdministrator(@Body() administratorData: AdministratorDTO): Promise<Administrator> {
+  //   const { username, password } = administratorData;
+  //   return this.administratorService.createAdministrator(username, password);
+  // }
 }

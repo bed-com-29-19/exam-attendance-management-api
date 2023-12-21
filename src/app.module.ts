@@ -27,6 +27,7 @@ import { Administrator } from './Administrator/entities/admin.entity';
 
       type: 'postgres',
       url: 'postgres://ublvrsdg:EYMciSfc0qP1KphYSlVVQF1CRKQ1-Ct4@flora.db.elephantsql.com/ublvrsdg',
+
        entities:[ Invigilator, Administrator],
         synchronize: false,
     }), 

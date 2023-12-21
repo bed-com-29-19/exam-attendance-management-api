@@ -24,6 +24,11 @@ export class LoginController {
     return this.loginService.createInvigilator(InvigilatorData);
   }
 
+  @Get('/getInvigilators')
+  getinvigilator(){
+      return this.loginService.getInvigilator();
+  }
+
   @Get('/getInvigilator/:id')
   async getInvigilator(@Param('id') id: number): Promise<Invigilator> {
     return this.loginService.getOneInvigilator(id);

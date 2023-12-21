@@ -12,6 +12,7 @@ export class GoogleSheetsService {
 
     const credentialsPath = path.resolve(__dirname, './src/google-sheets-credentials.json', 'google-sheets-credentials.json');
     const spreadsheetId = '1jtqCDIeBWXAGqODdYJaPM8qk1sWYjdK-t_i_u8FHsLE';
+    
     const creds = require(credentialsPath);
     const doc = new GoogleSpreadsheet(spreadsheetId, creds);
     //await this.doc.useServiceAccountFile(creds);

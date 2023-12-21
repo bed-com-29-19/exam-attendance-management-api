@@ -1,13 +1,14 @@
 
 {
-    "type": "mysql",
+    "type": "postgres",
     "host": "localhost",
+    "url": "postgres://ublvrsdg:EYMciSfc0qP1KphYSlVVQF1CRKQ1-Ct4@flora.db.elephantsql.com/ublvrsdg",
     "port": 3306,
     "username": "root",
     "password": "",
     "database": "unimaExamAttendance",
     "entities": ["Invigilator, Administrator"],
-    "synchronize": true,
+    "synchronize": false,
     "logging": true
   }
   

@@ -15,6 +15,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Invigilator} from "./login/entities/login.entity"
 import { Administrator } from './Administrator/entities/admin.entity';
 import { LoginService } from './login/login.service';
+import { AuthController } from './Auth/AuthController';
 @Module({
   imports: [
    TypeOrmModule.forFeature([Administrator, Invigilator]), 

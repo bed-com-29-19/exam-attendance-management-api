@@ -6,6 +6,8 @@ import { Invigilator } from './entities/login.entity';
 import { InvigilatorController } from './login.controller';
 import { LoginService } from './login.service';
 import { GoogleSheetsService } from 'src/google-sheets.services';
+import { AuthService } from 'src/Auth/AuthService';
+import { AuthController } from 'src/Auth/AuthController';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Invigilator])], // Import TypeORM module with the Invigilator entity

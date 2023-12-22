@@ -15,10 +15,10 @@ export class AuthService {
   }
 
   async validateUser(username: string, password: string): Promise<any> {
-   //const invigilator = await this.invigilatorService.validateInvigilator(username, password);
+   const invigilator = await this.invigilatorService.getOneInvigilator(+username);
     
-    if (username === 'username' && password === 'password') {
-      return { username }; // Return the user if valid
+    if (invigilator.username  && invigilator.password === 'password') {
+      return { invigilator}; // Return the user if valid
     }
     return null; // Return null for invalid user
   }

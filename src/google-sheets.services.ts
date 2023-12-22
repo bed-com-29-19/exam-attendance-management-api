@@ -1,59 +1,89 @@
-// src/google-sheets.service.ts
 import { Injectable } from '@nestjs/common';
 import { GoogleSpreadsheet, GoogleSpreadsheetRow } from 'google-spreadsheet';
-import path from 'path';
-
+import * as fs from 'fs';
+import { google, Auth } from 'googleapis';
+import { auth } from 'googleapis/build/src/apis/accessapproval';
 
 @Injectable()
 export class GoogleSheetsService {
-  private doc: GoogleSpreadsheet;
+  private readonly doc: GoogleSpreadsheet;
 
-  async authenticate() {
-    console.log('attempting to authenticate...');
-    //this.doc = new GoogleSpreadsheet('1jtqCDIeBWXAGqODdYJaPM8qk1sWYjdK-t_i_u8FHsLE');
+  constructor() {
     const spreadsheetId = '1jtqCDIeBWXAGqODdYJaPM8qk1sWYjdK-t_i_u8FHsLE';
-    
-    const credentialsPath = path.resolve(__dirname, 'path-to-credentials-folder', 'google-sheets-credentials.json');
-    const creds = require(credentialsPath);
-    const doc = new GoogleSpreadsheet(spreadsheetId, creds);
-    //await this.doc.useServiceAccountFile(creds);
-    await this.doc.loadInfo();
-    
-  }
+    this.doc = new GoogleSpreadsheet(spreadsheetId, auth);
 
-  async appendRow(data: any[]): Promise<void> {
-    if (!this.doc) {
-      await this.authenticate();
-    }
+  //   (async () => {
+  //     try {
+  //       const credentials = JSON.parse(fs.readFileSync('google-sheets-credentials.json', 'utf8'));
+  //       await this.useServiceAccountAuth(credentials);
+  //       console.log('Credentials successfully read:', credentials);
+  //     } catch (error) {
+  //       console.error('Error reading credentials file:', error.message);
+  //       throw error;
+   }
+  //   })();
+  // }
 
-    const sheet = this.doc.sheetsByIndex[0];
-    await sheet.addRow(data);
-  }
+  // private async useServiceAccountAuth(credentials: any) {
+  //   const { client_email, private_key } = credentials;
 
-  async getSheetData(): Promise<any[]> {
-    if (!this.doc) {
-      await this.authenticate();
-    }
+  //   const client = new google.auth.JWT({
+  //     email: client_email,
+  //     key: private_key,
+  //     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  //   });
 
-    const sheet = this.doc.sheetsByIndex[0];
-    await sheet.loadCells();
+  //   await this.doc.driveApi(client_email, private_key);
+  // }
 
-    const rowCount = sheet.rowCount;
-    const colCount = sheet.columnCount;
+  // private async loadSheet() {
+  //   await this.doc.loadInfo();
+  //   return this.doc.sheetsByIndex[0];
+  // }
 
-    const sheetData: any[] = [];
-    for (let i = 1; i <= rowCount; i++) {
-      const rowData: any = {};
-      for (let j = 0; j < colCount; j++) {
-        const cellValue = sheet.getCell(i, j).value;
-        rowData[`col${j + 1}`] = cellValue;
-      }
-      sheetData.push(rowData);
-    }
+  // async addRow(rows: any[]) {
+  //   try {
+  //     const sheet = await this.loadSheet();
 
-    return sheetData;
-  }
-  
-  
+  //     for (const row of rows) {
+  //       await sheet.addRow(row);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error in addRow:', error.message);
+  //     throw error;
+  //   }
+  // }
 
+  // async updateRow(keyValue: string, oldValue: string, newValue: string) {
+  //   try {
+  //     const sheet = await this.loadSheet();
+  //     const rows = await sheet.getRows();
+
+  //     const matchingRow = rows.find((row: GoogleSpreadsheetRow) => row[keyValue] === oldValue);
+
+  //     if (matchingRow) {
+  //       matchingRow[keyValue] = newValue;
+  //       await matchingRow.save();
+  //     }
+  //   } catch (error) {
+  //     console.error('Error in updateRow:', error.message);
+  //     throw error;
+  //   }
+  // }
+
+  // async deleteRow(keyValue: string, thisValue: string) {
+  //   try {
+  //     const sheet = await this.loadSheet();
+  //     const rows = await sheet.getRows();
+
+  //     const matchingRow = rows.find((row: GoogleSpreadsheetRow) => row[keyValue] === thisValue);
+
+  //     if (matchingRow) {
+  //       await matchingRow.delete();
+  //     }
+  //   } catch (error) {
+  //     console.error('Error in deleteRow:', error.message);
+  //     throw error;
+  //   }
+  // }
 }

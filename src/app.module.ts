@@ -14,19 +14,20 @@ import { GoogleSheetsService } from './google-sheets.services';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Invigilator} from "./login/entities/login.entity"
 import { Administrator } from './Administrator/entities/admin.entity';
+import { LoginService } from './login/login.service';
 @Module({
   imports: [
    TypeOrmModule.forFeature([Administrator, Invigilator]), 
     TypeOrmModule.forRoot({
-    //  type: 'mysql',
-    //  host:'sql11.freesqldatabse.com',
-    //    port: 3306,
-    //    username:'sql11671945',
-    //    password:'',
-    //    database:'unimaExamattendance',
+     type: 'mysql',
+     host:'localhost',
+       port: 3306,
+       username:'root',
+       password:'',
+       database:'unimaExamattendance',
 
-      type: 'postgres',
-      url: 'postgres://ublvrsdg:EYMciSfc0qP1KphYSlVVQF1CRKQ1-Ct4@flora.db.elephantsql.com/ublvrsdg',
+      // type: 'postgres',
+      // url: 'postgres://ublvrsdg:EYMciSfc0qP1KphYSlVVQF1CRKQ1-Ct4@flora.db.elephantsql.com/ublvrsdg',
 
        entities:[ Invigilator, Administrator],
         synchronize: false,
@@ -40,7 +41,7 @@ import { Administrator } from './Administrator/entities/admin.entity';
   ],
   
   controllers: [SwaggerController, AdministratorController],
-  providers: [AuthService, AdministratorService, JwtStrategy, JwtAuthGuard, GoogleSheetsService],
+  providers: [AuthService, LoginService, AdministratorService, JwtStrategy, JwtAuthGuard],
   exports: [AuthService],
 })
 export class AppModule {}

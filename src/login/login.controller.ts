@@ -1,7 +1,3 @@
-/* eslint-disable prettier/prettier */
-
-// login.controller.ts
-
 import { Controller, Get, Post, Put, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
 import { LoginService } from './login.service';
 import { Invigilator } from './entities/login.entity';
@@ -11,37 +7,35 @@ import { InvigilatorDTO } from './dto/login.dto';
 @ApiTags('invigilator')
 @Controller('invigilator')
 export class InvigilatorController {
-  sheetsService: any;
-  loginService: any;
+
   constructor(private readonly InvigilatorService: LoginService) {}
 
-  // @Post('/createInvigilator')
+  // @Post('Login')
   // async createInvigilator(@Body() invigilatorData: Partial<Invigilator>): Promise<Invigilator> {
-  //   return this.loginService.createInvigilator(invigilatorData);
+  //   return this.InvigilatorService.createInvigilator(invigilatorData);
   // }
 
  
-
-  @Post('/createInvigilator')
-  async createInvigilator(@Body() InvigilatorData: InvigilatorDTO): Promise<Invigilator>{
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { username, email, password, } = InvigilatorData;
-    return this.loginService.createInvigilator(InvigilatorData);
-  }
+  // @Post('/createInvigilator')
+  // async createInvigilator(@Body() InvigilatorData: InvigilatorDTO): Promise<Invigilator>{
+  //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //   const { username, email, password, } = InvigilatorData;
+  //   return this.InvigilatorService.createInvigilator(InvigilatorData);
+  // }
 
   @Get('/getInvigilators')
   getinvigilator(){
-      return this.loginService.getInvigilator();
+      return this.InvigilatorService.getInvigilator();
   }
 
   @Get('/getInvigilator/:id')
   async getInvigilator(@Param('id') id: number): Promise<Invigilator> {
-    return this.loginService.getOneInvigilator(id);
+    return this.InvigilatorService.getOneInvigilator(id);
   }
 
   @Delete('/removeInvigilator/:id')
   async removeInvigilator(@Param('id', ParseIntPipe) id: number){
-    return this.loginService.removeInvigilator(id);
+    return this.InvigilatorService.removeInvigilator(id);
   }
 
   @Put('/updateInvigilator/:id')
@@ -49,6 +43,6 @@ export class InvigilatorController {
     @Param('id') id: number,
     @Body() invigilatorData: Partial<Invigilator>,
   ): Promise<Invigilator> {
-    return this.loginService.updateInvigilator(id, invigilatorData);
+    return this.InvigilatorService.updateInvigilator(id, invigilatorData);
   }
 }

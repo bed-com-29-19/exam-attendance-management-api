@@ -1,8 +1,3 @@
-/* eslint-disable prettier/prettier */
-
-// login.service.ts
-
-
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -15,10 +10,10 @@ export class LoginService {
     private readonly invigilatorRepository: Repository<Invigilator>,
   ) {}
 
-  async createInvigilator(invigilatorData: Partial<Invigilator>): Promise<Invigilator> {
-    const newInvigilator = this.invigilatorRepository.create(invigilatorData);
-    return await this.invigilatorRepository.save(newInvigilator);
-  }
+  // async createInvigilator(invigilatorData: Partial<Invigilator>): Promise<Invigilator> {
+  //   const newInvigilator = this.invigilatorRepository.create(invigilatorData);
+  //   return await this.invigilatorRepository.save(newInvigilator);
+  // }
 
   async getInvigilator(): Promise<Invigilator[]>{
     return await this.invigilatorRepository.find();

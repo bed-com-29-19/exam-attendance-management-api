@@ -4,10 +4,12 @@ import { AdministratorController } from './administrator.controller';
 import { Administrator } from './entities/admin.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GoogleSheetsService } from 'src/google-sheets.services';
+import { Invigilator } from 'src/login/entities/login.entity';
+import { LoginService } from 'src/login/login.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Administrator])],
-  providers: [AdministratorService, GoogleSheetsService ],
+  imports: [TypeOrmModule.forFeature([Administrator, Invigilator])],
+  providers: [AdministratorService, GoogleSheetsService, LoginService ],
   controllers: [AdministratorController]
 
 })
